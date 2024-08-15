@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  MdOutlineDesignServices,
-  MdOutlineWebhook,
   MdAccountBalance,
   MdOutlineAnimation,
+  MdOutlineDesignServices,
+  MdOutlineWebhook,
 } from "react-icons/md";
 import { TbAppsFilled } from "react-icons/tb";
 import { FaReact } from "react-icons/fa";
@@ -61,9 +61,10 @@ const PopularCategories = () => {
       icon: <IoGameController />,
     },
   ];
+
   return (
     <div className="categories">
-      <h3>POPULAR CATEGORIES</h3>
+      <h3>Popular Categories</h3>
       <div className="banner">
         {categories.map((element) => {
           return (

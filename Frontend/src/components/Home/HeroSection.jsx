@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBuilding, FaSuitcase, FaUsers, FaUserPlus } from "react-icons/fa";
+import { FaBuilding, FaSuitcase, FaUserPlus, FaUsers } from "react-icons/fa";
 
 const HeroSection = () => {
   const details = [
@@ -28,38 +28,38 @@ const HeroSection = () => {
       icon: <FaUserPlus />,
     },
   ];
+
   return (
-    <>
-      <div className="heroSection">
-        <div className="container">
-          <div className="title">
-            <h1>Find a job that suits</h1>
-            <h1>your interests and skills</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem
-              voluptate repellat modi quidem aliquid eaque ducimus ipsa et,
-              facere mollitia!
-            </p>
-          </div>
-          <div className="image">
-            <img src="/heroS.jpg" alt="hero" />
-          </div>
+    <div className="heroSection">
+      <div className="container">
+        <div className="title">
+          <h1>Find a job that suits</h1>
+          <h1>your interest and skills</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
+            similique, pariatur nemo fuga quos recusandae cum quas repudiandae
+            consectetur, odio sed laboriosam molestias. Voluptatibus beatae
+            quis, accusantium aliquid odio blanditiis?
+          </p>
         </div>
-        <div className="details">
-          {details.map((element) => {
-            return (
-              <div className="card" key={element.id}>
-                <div className="icon">{element.icon}</div>
-                <div className="content">
-                  <p>{element.title}</p>
-                  <p>{element.subTitle}</p>
-                </div>
-              </div>
-            );
-          })}
+        <div className="image">
+          <img src="/heroS.jpg" alt="hero" />
         </div>
       </div>
-    </>
+      <div className="details">
+        {details.map((element) => {
+          return (
+            <div className="card" key={element.id}>
+              <div className="icon">{element.icon}</div>
+              <div className="content">
+                <p>{element.title}</p>
+                <p>{element.subTitle}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 

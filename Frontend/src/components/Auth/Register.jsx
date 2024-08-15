@@ -1,19 +1,18 @@
 import React, { useContext, useState } from "react";
-import { FaRegUser } from "react-icons/fa";
-import { MdOutlineMailOutline } from "react-icons/md";
-import { RiLock2Fill } from "react-icons/ri";
-import { FaPencilAlt } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
-import { Link, Navigate } from "react-router-dom";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { Context } from "../../main";
+import toast from "react-hot-toast";
+import { Link, Navigate } from "react-router-dom";
+import { FaPencilAlt, FaRegUser } from "react-icons/fa";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { FaPhoneFlip } from "react-icons/fa6";
+import { RiLock2Fill } from "react-icons/ri";
+import axios from "axios";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
   const [role, setRole] = useState("");
 
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
@@ -23,7 +22,7 @@ const Register = () => {
     try {
       const { data } = await axios.post(
         "http://localhost:4000/api/v1/user/register",
-        { name, phone, email, role, password },
+        { name, email, phone, role, password },
         {
           headers: {
             "Content-Type": "application/json",
@@ -32,21 +31,24 @@ const Register = () => {
         }
       );
       toast.success(data.message);
-      setName("");
       setEmail("");
+      setName("");
       setPassword("");
       setPhone("");
       setRole("");
       setIsAuthorized(true);
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage =
+        error.response && error.response.data && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      toast.error(errorMessage);
     }
   };
 
-  if(isAuthorized){
-    return <Navigate to={'/'}/>
+  if (isAuthorized) {
+    return <Navigate to={"/"} />;
   }
-
 
   return (
     <>
@@ -61,7 +63,7 @@ const Register = () => {
               <label>Register As</label>
               <div>
                 <select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">Select Role</option>
+                  <option value="" disabled hidden>Select Role</option>
                   <option value="Employer">Employer</option>
                   <option value="Job Seeker">Job Seeker</option>
                 </select>
@@ -73,9 +75,9 @@ const Register = () => {
               <div>
                 <input
                   type="text"
-                  placeholder="Zeeshan"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  placeholder="Anusri"
                 />
                 <FaPencilAlt />
               </div>
@@ -85,9 +87,9 @@ const Register = () => {
               <div>
                 <input
                   type="email"
-                  placeholder="zk@gmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="am@gmail.com"
                 />
                 <MdOutlineMailOutline />
               </div>
@@ -97,9 +99,9 @@ const Register = () => {
               <div>
                 <input
                   type="number"
-                  placeholder="12345678"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  placeholder="1234567890"
                 />
                 <FaPhoneFlip />
               </div>
@@ -109,21 +111,21 @@ const Register = () => {
               <div>
                 <input
                   type="password"
-                  placeholder="Your Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
                 />
                 <RiLock2Fill />
               </div>
             </div>
-            <button type="submit" onClick={handleRegister}>
+            <button onClick={handleRegister} type="submit">
               Register
             </button>
             <Link to={"/login"}>Login Now</Link>
           </form>
         </div>
         <div className="banner">
-          <img src="/register.png" alt="login" />
+          <img src="/register.png" alt="register" />
         </div>
       </section>
     </>

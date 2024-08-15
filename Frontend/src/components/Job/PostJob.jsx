@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
+import { Context } from "../../main";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../../main";
+
 const PostJob = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -13,7 +14,7 @@ const PostJob = () => {
   const [salaryFrom, setSalaryFrom] = useState("");
   const [salaryTo, setSalaryTo] = useState("");
   const [fixedSalary, setFixedSalary] = useState("");
-  const [salaryType, setSalaryType] = useState("default");
+  const [salaryType, setSalaryType] = useState("");
 
   const { isAuthorized, user } = useContext(Context);
 
@@ -21,13 +22,13 @@ const PostJob = () => {
     e.preventDefault();
     if (salaryType === "Fixed Salary") {
       setSalaryFrom("");
-      setSalaryFrom("");
+      setSalaryTo("");
     } else if (salaryType === "Ranged Salary") {
       setFixedSalary("");
     } else {
+      setFixedSalary("");
       setSalaryFrom("");
       setSalaryTo("");
-      setFixedSalary("");
     }
     await axios
       .post(
@@ -62,12 +63,13 @@ const PostJob = () => {
       .then((res) => {
         toast.success(res.data.message);
       })
-      .catch((err) => {
-        toast.error(err.response.data.message);
+      .catch((error) => {
+        toast.error(error.response.data.message);
       });
   };
 
   const navigateTo = useNavigate();
+
   if (!isAuthorized || (user && user.role !== "Employer")) {
     navigateTo("/");
   }
@@ -76,7 +78,7 @@ const PostJob = () => {
     <>
       <div className="job_post page">
         <div className="container">
-          <h3>POST NEW JOB</h3>
+          <h3>Post New Job</h3>
           <form onSubmit={handleJobPost}>
             <div className="wrapper">
               <input
@@ -145,7 +147,7 @@ const PostJob = () => {
               </select>
               <div>
                 {salaryType === "default" ? (
-                  <p>Please provide Salary Type *</p>
+                  <p>Please Provide Salary Type *</p>
                 ) : salaryType === "Fixed Salary" ? (
                   <input
                     type="number"
@@ -165,7 +167,7 @@ const PostJob = () => {
                       type="number"
                       placeholder="Salary To"
                       value={salaryTo}
-                      onChange={(e) => setSalaryTo(e.target.value)}
+                      onChange={(e) => setSalaryTo}
                     />
                   </div>
                 )}
@@ -175,7 +177,7 @@ const PostJob = () => {
               rows="10"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Job Description"
+              placeholder="Description"
             />
             <button type="submit">Create Job</button>
           </form>

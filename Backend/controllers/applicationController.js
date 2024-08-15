@@ -79,20 +79,20 @@ export const postApplication = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("Resume File Required!", 400));
   }
   const { resume } = req.files;
-//   const allowedFormats = ["image/png", "image/jpg", "image/webp"];
-//   if (!allowedFormats.includes(resume.mimetype)) {
-//     return next(
-//       new ErrorHandler(
-//         "Invalid file type. Please upload your resume in a PNG, JPG or WEBP format!",
-//         400
-//       )
-//     );
-//   }
+  const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+  if (!allowedFormats.includes(resume.mimetype)) {
+    return next(
+      new ErrorHandler(
+        "Invalid file type. Please upload your resume in a PNG, JPG or WEBP format!",
+        400
+      )
+    );
+  }
   const cloudinaryResponse = await cloudinary.uploader.upload(
     resume.tempFilePath,
-    {
-      folder: "Job_Seekers_Resume",
-    }
+    // {
+    //   folder: "Job_Seekers_Resume",
+    // }
   );
   if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.error(
